@@ -1,0 +1,31 @@
+/* 폰트 */
+@font-face {
+	font-family: 'GmarketSansMedium';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html>body {
+	font-family: 'GmarketSansMedium';
+}
+
+/* 라이브러리 */
+.table-box-type-1>table {
+	width: 100%;
+}
+
+.table-box-type-1>table th, .table-box-type-1>table td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.btn-text-link {
+	color: blue;
+}
+
+.btn-text-link:hover {
+	text-decoration: underline;	
+}
