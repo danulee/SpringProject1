@@ -43,7 +43,7 @@
           <tr>
             <th>내용</th>
             <td>
-              <textarea class="w-full textarea textarea-bordered" name="body" rows="10">${article.body}</textarea>
+              <textarea class="w-full textarea textarea-bordered" name="body" rows="10" placeholder="내용">${article.body}</textarea>
             </td>
           </tr>
           <tr>
@@ -56,9 +56,7 @@
         </tbody>
       </table>
 
-
       <div class="btns">
-        <button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
         <a class="btn btn-link" href="../article/modify?id=${article.id}">게시물 수정</a>
         <c:if test="${article.extra__actorCanDelete}">
           <a class="btn btn-link" onclick="if ( confirm('정말 삭제하시겠습니까?') == false) return false;"

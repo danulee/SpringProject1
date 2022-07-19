@@ -40,8 +40,13 @@
           </a>
         </li>
         <li>
+          <a href="/usr/article/write" class="h-full flex items-center px-3 hover:underline">
+            <span>작성</span>
+          </a>
+        </li>
+        <li>
           <a href="/usr/article/list" class="h-full flex items-center px-3 hover:underline">
-            <span>리스트</span>
+            <span>게시글</span>
           </a>
         </li>
         <c:if test="${!rq.isLogined()}">
