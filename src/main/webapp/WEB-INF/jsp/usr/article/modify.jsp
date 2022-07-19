@@ -63,7 +63,7 @@
             href="../article/doDelete?id=${article.id}">게시물 삭제</a>
         </c:if>
       </div>
-      </from>
+      </form>
   </div>
 </section>
 
