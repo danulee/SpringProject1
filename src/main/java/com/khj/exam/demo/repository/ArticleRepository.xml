@@ -3,14 +3,12 @@
 
 <mapper
 	namespace="com.khj.exam.demo.repository.ArticleRepository">
-	<insert id="writeArticle">
-		INSERT INTO article
+	<insert id="writeArticle">INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		memberId = #{memberId},
+	boardId = #{boardId},	memberId = #{memberId},
 		title = #{title},
-		`body` = #{body}
-	</insert>
+		`body` = #{body}</insert>
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
