@@ -11,6 +11,7 @@ import com.khj.exam.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId, @Param("title") String title, @Param("body") String body);
+	
 	@Select("""
 			SELECT A.*,
 			M.nickname AS extra__writerName
@@ -38,9 +39,14 @@ public interface ArticleRepository {
 				AND A.boardId = #{boardId}
 			</if>
 			ORDER BY id DESC
+			<if test="limitStart != -1">
+				LIMIT #{limitStart}, #{limitTake}
+			</if>
 			</script>
 			""")
-	public List<Article> getForPrintArticles(@Param("boardId") int boardId);
+	public List<Article> getForPrintArticles(@Param("boardId") int boardId, int limitStart, int limitTake);
+
+	public int getLastInsertId();
 
 	@Select("""
 			<script>
@@ -53,7 +59,4 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticlesCount(@Param("boardId") int boardId);
-	
-	public int getLastInsertId();
-	
 }
