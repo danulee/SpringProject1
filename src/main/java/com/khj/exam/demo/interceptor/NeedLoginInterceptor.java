@@ -10,7 +10,14 @@ import com.khj.exam.demo.vo.Rq;
 
 @Component
 public class NeedLoginInterceptor implements HandlerInterceptor {
+	private Rq rq;
+
+	public NeedLoginInterceptor(Rq rq) {
+		this.rq = rq;
+	}
+	
 	@Override
+	
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 		Rq rq = (Rq) req.getAttribute("rq");
 		

@@ -127,12 +127,27 @@ SELECT * FROM article;
 # 1, 2번 게시물을 공지사항 게시물로 지정
 UPDATE article
 SET boardId = 1
-WHERE id IN(1, 2);
+WHERE id IN(1,2);
 
 # 2번 게시물을 자유게시판 게시물로 지정
 UPDATE article
 SET boardId = 2
 WHERE id IN(3);
 
+
 SELECT * FROM board WHERE id = 1;
 SELECT * FROM board WHERE id = 2;
+
+select* from article;
+
+
+# 게시물 개수 늘리기
+insert into article
+(
+	regDate, updateDate, memberId, boardId, title, `body`
+)
+select Now(), now(), FLOOR(RAND() * 2) + 1, FLOOR(RAND() * 2) + 1, concat('제목_', rand()), CONCAT('제목_', RAND())
+from article;
+
+
+SELECT COUNT(*) FROM article;
