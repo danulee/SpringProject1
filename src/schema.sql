@@ -122,7 +122,7 @@ updateDate = NOW(),
 # 게시판 테이블에 boardId 컬럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
 
-SELECT * FROM article
+SELECT * FROM article;
 
 # 1, 2번 게시물을 공지사항 게시물로 지정
 UPDATE article
