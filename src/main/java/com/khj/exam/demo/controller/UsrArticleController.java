@@ -21,7 +21,7 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	private BoardService boardService;
 	private Rq rq;
-	
+
 	public UsrArticleController(ArticleService articleService, BoardService boardService, Rq rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
@@ -29,17 +29,19 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId, @RequestParam(defaultValue = "1") int page) {
+	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId,
+			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
+			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 		Board board = boardService.getBoardById(boardId);
-		
-		if ( board == null ) {
+
+		if (board == null) {
 			return rq.historyBackJsOnView(Ut.f("%d번 게시판은 존재하지 않습니다.", boardId));
 		}
 
-		int articlesCount = articleService.getArticlesCount(boardId);
-		
+		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
+
 		int itemsCountInAPage = 10;
-		int pagesCount = (int)Math.ceil((double)articlesCount / itemsCountInAPage);
+		int pagesCount = (int) Math.ceil((double) articlesCount / itemsCountInAPage);
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, itemsCountInAPage, page);
 
 		model.addAttribute("boardId", boardId);
@@ -104,9 +106,9 @@ public class UsrArticleController {
 		if (actorCanModifyRd.isFail()) {
 			return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
 		}
-		
+
 		model.addAttribute("article", article);
-		
+
 		return "usr/article/modify";
 	}
 
@@ -126,16 +128,15 @@ public class UsrArticleController {
 		}
 
 		articleService.modifyArticle(id, title, body);
-		
+
 		return rq.jsReplace(Ut.f("%d번 글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
-
 
 	@RequestMapping("/usr/article/write")
 	public String showWrite(Model model) {
 		return "usr/article/write";
 	}
-	
+
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
 	public String doWrite(int boardId, String title, String body, String replaceUri) {
@@ -149,8 +150,8 @@ public class UsrArticleController {
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(rq.getLoginedMemberId(), boardId, title, body);
 		int id = writeArticleRd.getData1();
-		
-		if ( Ut.empty(replaceUri) ) {
+
+		if (Ut.empty(replaceUri)) {
 			replaceUri = Ut.f("../article/detail?id=%d", id);
 		}
 
