@@ -8,7 +8,7 @@
   <div class="flex">
     <div>게시물 개수 : <span class="text-blue-700">${articlesCount}</span>개</div>
     <div class="flex-grow"></div>
-    <form class="flex">
+    <form class="flex my-4">
         <input type="hidden" name="boardId" value="${param.boardId}"/>
      <select data-value="${param.searchKeywordTypeCode}" name="searchKeywordTypeCode"class="select select-bordered">
           <option disabled="disabled">검색타입</option>

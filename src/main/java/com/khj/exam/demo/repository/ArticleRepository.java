@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.khj.exam.demo.vo.Article;
 
@@ -38,33 +39,30 @@ public interface ArticleRepository {
 			<if test="boardId != 0">
 				AND A.boardId = #{boardId}
 			</if>
-			<if test="boardId != 0">
-				AND A.boardId = #{boardId}
-			</if>
 			<if test="searchKeyword != ''">
 				<choose>
-			    	<when test="searchKeywordTypeCode == 'title'">
-			    		AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-			    	</when>
-			    	<when test="searchKeywordTypeCode == 'body'">
-			    		AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-			    	</when>
-			    	<otherwise>
-			    		AND(
-			    			A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-			    			OR
-			    			A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-			    		)
-			    	</otherwise>
-			    </choose>
+					<when test="searchKeywordTypeCode == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordTypeCode == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR
+							A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
 			</if>
-			ORDER BY id DESC
-			<if test="limitStart != -1">
+			ORDER BY A.id DESC
+			<if test="limitTake != -1">
 				LIMIT #{limitStart}, #{limitTake}
 			</if>
 			</script>
 			""")
-	public List<Article> getForPrintArticles(int boardId, int limitStart, int limitTake, String searchKeyword, String searchKeywordTypeCode);
+	public List<Article> getArticles(int boardId, String searchKeyword, String searchKeywordTypeCode, int limitStart, int limitTake);
 
 	public int getLastInsertId();
 
@@ -78,22 +76,31 @@ public interface ArticleRepository {
 			</if>
 			<if test="searchKeyword != ''">
 				<choose>
-			    	<when test="searchKeywordTypeCode == 'title'">
-			    		AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-			    	</when>
-			    	<when test="searchKeywordTypeCode == 'body'">
-			    		AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-			    	</when>
-			    	<otherwise>
-			    		AND(
-			    			A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-			    			OR
-			    			A.body LIKE CONCAT('%', #{searchKeyword}, '%')
-			    		)
-			    	</otherwise>
-			    </choose>
+					<when test="searchKeywordTypeCode == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchKeywordTypeCode == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND (
+							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+							OR
+							A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+					</otherwise>
+				</choose>
 			</if>
 			</script>
 			""")
 	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
+
+	@Update("""
+			<script>
+			UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int increaseHitCount(int id);
 }
