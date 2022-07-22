@@ -5,9 +5,23 @@
 
 <section class="mt-5">
   <div class="container mx-auto px-3">
-    <div>게시물 개수 : ${articlesCount}개</div>
+  <div class="flex">
+    <div>게시물 개수 : <span class="text-blue-700">${articlesCount}</span>개</div>
+    <div class="flex-grow"></div>
+    <form class="flex">
+        <input type="hidden" name="boardId" value="${param.boardId}"/>
+     <select data-value="${param.searchKeywordTypeCode}" name="searchKeywordTypeCode"class="select select-bordered">
+          <option disabled="disabled">검색타입</option>
+          <option value="title">제목</option>
+          <option value="body">내용</option>
+          <option value="title,body">제목,내용</option>
+        </select>
+        <input name="searchKeyword" type="text" class="ml-2 w-72 input input-bordered" placeholder="검색어" maxlength="20" value="${param.searchKeyword}"/>
+    	<input type="submit" class="btn btn-primary" value="검색" />
+    </form>
+    </div>
     <div class="table-box-type-1">
-      <table>
+      <table class="table table-fixed w-full">
         <colgroup>
           <col width="50" />
           <col width="150" />
@@ -26,13 +40,13 @@
         </thead>
         <tbody>
           <c:forEach var="article" items="${articles}">
-            <tr>
+            <tr class="hover">
               <td>${article.id}</td>
               <td>${article.regDate.substring(2, 16)}</td>
               <td>${article.updateDate.substring(2, 16)}</td>
               <td>${article.extra__writerName}</td>
               <td>
-                <a class="btn-text-link" href="../article/detail?id=${article.id}">${article.title}</a>
+                <a class="btn-text-link block w-full truncate" href="../article/detail?id=${article.id}">${article.title}</a>
               </td>
             </tr>
           </c:forEach>
@@ -40,28 +54,33 @@
       </table>
     </div>
 
+<!-- page 메뉴 -->
     <div class="page-menu mt-4">
       <div class="btn-group justify-center">
         <c:set var="pageMenuArmLen" value="4" />
         <c:set var="startPage" value="${page - pageMenuArmLen >= 1 ? page - pageMenuArmLen : 1}" />
         <c:set var="endPage" value="${page + pageMenuArmLen <= pagesCount ? page + pageMenuArmLen : pagesCount}" />
-
+        
+        <c:set var="pageBaseUri" value="?boardId=${boardId}" />
+        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}" />
+        <c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordTypeCode=${param.searchKeywordTypeCode}" />
+        
         <c:if test="${startPage > 1}">
-          <a class="btn btn-sm " href="?page=1&boardId=${boardId}">1</a>
+          <a class="btn btn-sm " href="${pageBaseUri}&page=1">1</a>
           <c:if test="${startPage > 2}">
             <a class="btn btn-sm btn-disabled">...</a>
           </c:if>
         </c:if>
 
         <c:forEach begin="${startPage}" end="${endPage}" var="i">
-          <a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="?page=${i}&boardId=${boardId}">${i}</a>
+          <a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="${pageBaseUri}&page=${i}">${i}</a>
         </c:forEach>
 
         <c:if test="${endPage < pagesCount}">
           <c:if test="${endPage < pagesCount - 1}">
             <a class="btn btn-sm btn-disabled">...</a>
           </c:if>
-          <a class="btn btn-sm" href="?page=${pagesCount}&boardId=${boardId}">${pagesCount}</a>
+          <a class="btn btn-sm" href="${pageBaseUri}&page=${pagesCount}">${pagesCount}</a>
         </c:if>
       </div>
     </div>
