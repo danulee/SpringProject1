@@ -10,8 +10,17 @@
 
 <script>
 function ArticleDetail__increaseHitCout() {
+	const localStorageKey = 'article__'+ params.id + '__viewDone';
+	
+	if (localStorage.getItem(localStorageKey)) {
+		return;
+	}
+		
+	localStorage.setItem(localStorageKey, true);
+	
 	$.get('../article/doIncreaseHitCountRd', {
-			id: params.id
+			id: params.id,
+			ajaxMode: 'Y'
 		}, function(data) {
 			$('.article-detail__hit-count').empty().html(data.data1);
 		}, 'json');
@@ -21,7 +30,7 @@ function ArticleDetail__increaseHitCout() {
 		// ArticleDetail__increaseHitCout();
 		
 		// 임시코드
-		setTimeout(ArticleDetail__increaseHitCout, 3000)
+		setTimeout(ArticleDetail__increaseHitCout, 300)
 	})
 </script>
 
