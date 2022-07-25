@@ -103,7 +103,7 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int increaseHitCount(int id);
-	
+
 	@Select("""
 			<script>
 			SELECT hitCount

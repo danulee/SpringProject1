@@ -3,13 +3,35 @@
 <c:set var="pageTitle" value="게시물 내용" />
 <%@ include file="../common/head.jspf"%>
 
+<script>
+  const params = {};
+  params.id = parseInt('${param.id}');
+</script>
+
+<script>
+function ArticleDetail__increaseHitCout() {
+	$.get('../article/doIncreaseHitCountRd', {
+			id: params.id
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+}
+	$(function() {
+		// 실전코드
+		// ArticleDetail__increaseHitCout();
+		
+		// 임시코드
+		setTimeout(ArticleDetail__increaseHitCout, 3000)
+	})
+</script>
+
 <section class="mt-5">
   <div class="container mx-auto px-3">
     <div class="table-box-type-1">
       <table>
-      <colgroup>
-        <col width="200"/>
-      </colgroup>
+        <colgroup>
+          <col width="200" />
+        </colgroup>
         <tbody>
           <tr>
             <th>번호</th>
@@ -27,35 +49,39 @@
             <th>작성자</th>
             <td>${article.extra__writerName}</td>
           </tr>
-           <tr>
+          <tr>
             <th>조회수</th>
-            <td>${article.hitCount}</td>
+            <td>
+              <span class="text-blue-700 article-detail__hit-count">${article.hitCount}</span>
+            </td>
           </tr>
           <tr>
             <th>제목</th>
-            <td>
-              ${article.title}
-            </td>
+            <td>${article.title}</td>
           </tr>
           <tr>
             <th>내용</th>
-            <td>
-              ${article.body}
-            </td>
+            <td>${article.body}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="btns">
-      <button class="btn btn-link"  type="button" onclick="history.back();">뒤로가기</button>
+      <button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
       <c:if test="${article.extra__actorCanModify}">
-        <a class="btn btn-link"" href="../article/modify?id=${article.id}">게시물 수정</a>
+        <a class="btn btn-link" " href="../article/modify?id=${article.id}">게시물 수정</a>
       </c:if>
       <c:if test="${article.extra__actorCanDelete}">
-        <a class="btn btn-link"" onclick="if ( confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id}">게시물 삭제</a>
+        <a class="btn btn-link" " onclick="if ( confirm('정말 삭제하시겠습니까?') == false) return false;"
+          href="../article/doDelete?id=${article.id}"
+        >게시물 삭제</a>
       </c:if>
     </div>
   </div>
 </section>
+
+<!-- 
+<iframe src="http://localhost:8011/usr/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe>
+ -->
 
 <%@ include file="../common/foot.jspf"%>
