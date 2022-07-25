@@ -24,7 +24,7 @@
 <!-- 사이트 공통 CSS -->
 <link rel="stylesheet" href="/resource/common.css" />
 <!-- 사이트 공통 JS -->
-<script src="resource/common.js" defer="defer"></script>
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
   <header>
