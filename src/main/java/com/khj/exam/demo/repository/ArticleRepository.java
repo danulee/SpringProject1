@@ -131,4 +131,15 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticleHitCount(int id);
+	
+	@Select("""
+			<script>
+			SELECT IFNULL(SUM(RP.point), 0) AS s
+			FROM reactionPoint AS RP
+			WHERE RP.relTypeCode = 'article'
+			AND id = #{id}
+			AND RP.memberId = #{memberId} 
+			</script>
+			""")
+	public int actorCanMackReactionPoint(int id, int memberId);
 }
