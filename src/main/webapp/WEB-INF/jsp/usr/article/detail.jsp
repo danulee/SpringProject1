@@ -65,6 +65,12 @@ function ArticleDetail__increaseHitCout() {
             </td>
           </tr>
           <tr>
+            <th>추천</th>
+            <td>
+              <span class="text-blue-700">${article.extra__goodReactionPoint}</span>
+            </td>
+          </tr>
+          <tr>
             <th>제목</th>
             <td>${article.title}</td>
           </tr>

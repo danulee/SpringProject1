@@ -31,6 +31,18 @@
             </td>
           </tr>
           <tr>
+            <th>조회</th>
+            <td>
+              <span class="text-blue-700">${article.hitCount}</span>
+            </td>
+          </tr>
+          <tr>
+            <th>수정날짜</th>
+            <td>
+              <span class="text-blue-700">${article.extra__goodReactionPoint}</span>
+            </td>
+          </tr>
+          <tr>
             <th>작성자</th>
             <td>${article.extra__writerName}</td>
           </tr>
