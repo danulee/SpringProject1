@@ -5,28 +5,35 @@
 
 <section class="mt-5">
   <div class="container mx-auto px-3">
-  <div class="flex">
-    <div>게시물 개수 : <span class="text-blue-700">${articlesCount}</span>개</div>
-    <div class="flex-grow"></div>
-    <form class="flex my-4">
+    <div class="flex">
+      <div>
+        게시물 개수 : <span class="text-blue-700">${articlesCount}</span>개
+      </div>
+      <div class="flex-grow"></div>
+      <form class="flex">
         <input type="hidden" name="boardId" value="${param.boardId}"/>
-     <select data-value="${param.searchKeywordTypeCode}" name="searchKeywordTypeCode"class="select select-bordered">
+      
+        <select data-value="${param.searchKeywordTypeCode}" name="searchKeywordTypeCode"class="select select-bordered">
           <option disabled="disabled">검색타입</option>
           <option value="title">제목</option>
           <option value="body">내용</option>
           <option value="title,body">제목,내용</option>
         </select>
+        
         <input name="searchKeyword" type="text" class="ml-2 w-72 input input-bordered" placeholder="검색어" maxlength="20" value="${param.searchKeyword}"/>
-    	<input type="submit" class="btn btn-primary" value="검색" />
-    </form>
+        
+        <button type="submit" class="ml-2 btn btn-primary">검색</button>
+      </form>
     </div>
-    <div class="table-box-type-1">
+    <div class="mt-3">
       <table class="table table-fixed w-full">
         <colgroup>
           <col width="50" />
-          <col width="150" />
-          <col width="150" />
-          <col width="150" />
+          <col width="100" />
+          <col width="100" />
+          <col width="50" />
+          <col width="50" />
+          <col width="100" />
           <col />
         </colgroup>
         <thead>
@@ -34,6 +41,8 @@
             <th>번호</th>
             <th>작성날짜</th>
             <th>수정날짜</th>
+            <th>조회</th>
+            <th>추천</th>
             <th>작성자</th>
             <th>제목</th>
           </tr>
@@ -44,6 +53,8 @@
               <th>${article.id}</th>
               <td>${article.forPrintType1RegDate}</td>
               <td>${article.forPrintType1UpdateDate}</td>
+              <td>${article.hitCount}</td>
+              <td>${article.extra__goodReactionPoint}</td>
               <td>${article.extra__writerName}</td>
               <td>
                 <a class="btn-text-link block w-full truncate" href="../article/detail?id=${article.id}">${article.title}</a>
@@ -54,7 +65,6 @@
       </table>
     </div>
 
-<!-- page 메뉴 -->
     <div class="page-menu mt-4">
       <div class="btn-group justify-center">
         <c:set var="pageMenuArmLen" value="4" />
