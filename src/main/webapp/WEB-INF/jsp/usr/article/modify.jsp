@@ -39,7 +39,7 @@
           <tr>
             <th>수정날짜</th>
             <td>
-              <span class="text-blue-700">${article.extra__goodReactionPoint}</span>
+              <span class="text-blue-700">${article.goodReactionPoint}</span>
             </td>
           </tr>
           <tr>
