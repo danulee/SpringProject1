@@ -32,6 +32,7 @@ public class UsrArticleController {
 		this.rq = rq;
 	}
 
+	// jsp로 이동하는 것은 responebody 필요 X
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId,
 			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode,
@@ -64,9 +65,9 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
 
-		boolean actorCanMackReactionPoint = reactionPointService.actorCanMackReactionPoint(rq.getLoginedMemberId(),
+		boolean actorCanMakeReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(),
 				"article", id);
-		model.addAttribute("actorCanMackReactionPoint", actorCanMackReactionPoint);
+		model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
 
 		return "usr/article/detail";
 	}
@@ -182,4 +183,5 @@ public class UsrArticleController {
 
 		return rq.jsReplace(Ut.f("%d번 글이 생성되었습니다.", id), replaceUri);
 	}
+
 }
