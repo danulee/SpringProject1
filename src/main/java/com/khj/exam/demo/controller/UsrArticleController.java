@@ -24,7 +24,8 @@ public class UsrArticleController {
 	private Rq rq;
 	private ReactionPointService reactionPointService;
 
-	public UsrArticleController(ArticleService articleService, BoardService boardService, ReactionPointService reactionPointService, Rq rq) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService,
+			ReactionPointService reactionPointService, Rq rq) {
 		this.articleService = articleService;
 		this.boardService = boardService;
 		this.reactionPointService = reactionPointService;
@@ -45,8 +46,8 @@ public class UsrArticleController {
 
 		int itemsCountInAPage = 10;
 		int pagesCount = (int) Math.ceil((double) articlesCount / itemsCountInAPage);
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, searchKeyword, searchKeywordTypeCode, itemsCountInAPage,
-				page);
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, searchKeyword,
+				searchKeywordTypeCode, itemsCountInAPage, page);
 
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("board", board);
@@ -59,29 +60,31 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {		
+	public String showDetail(Model model, int id) {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
 
-		boolean actorCanMackReactionPoint =  reactionPointService.actorCanMackReactionPoint(rq.getLoginedMemberId(), "article",id);
+		boolean actorCanMackReactionPoint = reactionPointService.actorCanMackReactionPoint(rq.getLoginedMemberId(),
+				"article", id);
 		model.addAttribute("actorCanMackReactionPoint", actorCanMackReactionPoint);
 
 		return "usr/article/detail";
 	}
-	
+
 	@RequestMapping("/usr/article/doIncreaseHitCountRd")
 	@ResponseBody
 	public ResultData<Integer> doIncreaseHitCountRd(int id) {
 		ResultData<Integer> increaseHitCountRd = articleService.increaseHitCount(id);
-		
-		if ( increaseHitCountRd.isFail() ) {
+
+		if (increaseHitCountRd.isFail()) {
 			return increaseHitCountRd;
 		}
-		
-		ResultData<Integer> rd = ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
-		
+
+		ResultData<Integer> rd = ResultData.newData(increaseHitCountRd, "hitCount",
+				articleService.getArticleHitCount(id));
+
 		rd.setData2("id", id);
-		
+
 		return rd;
 	}
 
