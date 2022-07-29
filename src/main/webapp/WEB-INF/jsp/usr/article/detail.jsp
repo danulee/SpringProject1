@@ -84,7 +84,7 @@
 
 								<c:if test="${actorCanCancelGoodReaction}">
 									<a
-										href="/usr/reactionPoint/docancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+										href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
 										class="btn btn-xs  btn-primary"> 좋아요 👍 </a>
 									<span>&nbsp;</span>
 									<a onclick="alert(this.title); return false;" href="#"
@@ -98,7 +98,7 @@
 										class="btn btn-xs  btn-primary  btn-outline"> 좋아요 👍 </a>
 									<span>&nbsp;</span>
 									<a
-										href="/usr/reactionPoint/docancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+										href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
 										class="btn btn-xs  btn-secondary"> 싫어요 👎 </a>
 								</c:if>
 							</div>
@@ -118,7 +118,7 @@
 		<div class="btns">
 			<button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
 			<c:if test="${article.extra__actorCanModify}">
-				<a class="btn btn-link" " href="../article/modify?id=${article.id}">게시물
+				<a class="btn btn-link" href="../article/modify?id=${article.id}">게시물
 					수정</a>
 			</c:if>
 			<c:if test="${article.extra__actorCanDelete}">
@@ -129,5 +129,46 @@
 		</div>
 	</div>
 </section>
+
+<section class="mt-5">
+  <div class="container mx-auto px-3">
+    <h1>댓글 작성</h1>
+    <c:if test="${rq.logined}">
+      <form class="table-box-type-1" method="POST" action="../reply/doWrite">
+        <input type="hidden" name="relTypeCode" value="article" />
+        <input type="hidden" name="relId" value="${article.id}" />
+        <table>
+          <colgroup>
+            <col width="200" />
+          </colgroup>
+          <tbody>
+            <tr>
+            <tr>
+              <th>작성자</th>
+              <td>${rq.loginedMember.nickname}</td>
+            </tr>
+            <tr>
+              <th>내용</th>
+              <td>
+                <textarea required="required" name="body" rows="5" placeholder="내용"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <th>댓글작성</th>
+              <td>
+                <button type="submit" class="btn btn-primary">댓글작성</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </c:if>
+    <c:if test="${rq.notLogined}">
+      <a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
+    </c:if>
+  </div>
+</section>
+
+
 
 <%@ include file="../common/foot.jspf"%>
