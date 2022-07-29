@@ -74,9 +74,9 @@ public class UsrArticleController {
 			int sumReactionPointByeMemberId = (int) actorCanMakeReactionPointRd.getData1();
 
 			if (sumReactionPointByeMemberId > 0) {
-				model.addAttribute("actorCanCencelGoodReaction", true);
+				model.addAttribute("actorCanCancelGoodReaction", true);
 			} else {
-				model.addAttribute("actorCanCencelBadReaction", true);
+				model.addAttribute("actorCanCancelBadReaction", true);
 			}
 		}
 

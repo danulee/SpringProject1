@@ -82,9 +82,9 @@
 										class="btn btn-xs  btn-secondary btn-outline"> 싫어요 👎 </a>
 								</c:if>
 
-								<c:if test="${actorCanCencelGoodReaction}">
+								<c:if test="${actorCanCancelGoodReaction}">
 									<a
-										href="/usr/reactionPoint/doCencelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+										href="/usr/reactionPoint/docancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
 										class="btn btn-xs  btn-primary"> 좋아요 👍 </a>
 									<span>&nbsp;</span>
 									<a onclick="alert(this.title); return false;" href="#"
@@ -92,13 +92,13 @@
 										class="btn btn-xs  btn-secondary btn-outline"> 싫어요 👎 </a>
 								</c:if>
 
-								<c:if test="${actorCanCencelBadReaction}">
+								<c:if test="${actorCanCancelBadReaction}">
 									<a onclick="alert(this.title); return false;" href="#"
 										title="먼저 싫어요를 취소해주세요."
 										class="btn btn-xs  btn-primary  btn-outline"> 좋아요 👍 </a>
 									<span>&nbsp;</span>
 									<a
-										href="/usr/reactionPoint/doCencelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+										href="/usr/reactionPoint/docancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
 										class="btn btn-xs  btn-secondary"> 싫어요 👎 </a>
 								</c:if>
 							</div>
