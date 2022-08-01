@@ -69,7 +69,9 @@
 				<tbody>
 					<tr>
 						<th>번호</th>
-						<td><span class="font-bold">${article.id}</span></td>
+						<td>
+							<div class="badge badge-primary">${article.id}</div>
+						</td>
 					</tr>
 					<tr>
 						<th>작성날짜</th>
@@ -84,15 +86,15 @@
 						<td>${article.extra__writerName}</td>
 					</tr>
 					<tr>
-						<th>조회수</th>
-						<td><span class="text-blue-700 article-detail__hit-count">${article.hitCount}</span>
+						<th>조회</th>
+						<td><span class="badge badge-primary article-detail__hit-count">${article.hitCount}</span>
 						</td>
 					</tr>
 					<tr>
 						<th>추천</th>
 						<td>
 							<div class="flex items-center">
-								<span class="text-blue-700">${article.goodReactionPoint}</span>
+								<span class="badge badge-primary">${article.goodReactionPoint}</span>
 								<span>&nbsp;</span>
 
 								<c:if test="${actorCanMakeReaction}">
@@ -193,14 +195,49 @@
 			</form>
 		</c:if>
 		<c:if test="${rq.notLogined}">
-			<a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
+			<a class="link link-primary" href="/usr/member/login">로그인</a> 후 이용해주세요.
     </c:if>
 	</div>
 </section>
 
 <section class="mt-5">
 	<div class="container mx-auto px-3">
-		<h1>댓글 리스트(${repliesCount})</h1>
+		 <h1>댓글 리스트(${replies.size()})</h1>
+
+    <table class="table table-fixed w-full">
+      <colgroup>
+        <col width="50" />
+        <col width="100" />
+        <col width="100" />
+        <col width="50" />
+        <col width="100" />
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>작성날짜</th>
+          <th>수정날짜</th>
+          <th>추천</th>
+          <th>작성자</th>
+          <th>내용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="reply" items="${replies}">
+          <tr class="align-top">
+            <th>${reply.id}</th>
+            <td>${reply.forPrintType1RegDate}</td>
+            <td>${reply.forPrintType1UpdateDate}</td>
+            <td>${reply.goodReactionPoint}</td>
+            <td>${reply.extra__writerName}</td>
+            <td>
+              ${reply.forPrintBody}
+            </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
 	</div>
 </section>
 
