@@ -4,10 +4,28 @@
 <c:set var="pageTitle" value="게시물 수정" />
 <%@ include file="../common/head.jspf"%>
 
+<script>
+	let ArticleModify__submitDone = false;
+	function ArticleModify__submitDone(form) {
+		if (ArticleModify__submitDone) {
+			return;
+		}
+		// 좌우공백 제거
+		form.body.value = form.body.value.trim();
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+		ArticleModify__submitDone = true;
+		form.submit();
+	}
+</script>
+
 <section class="mt-5">
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="POST"
-			action="../article/doModify">
+			action="../article/doModify" onsubmit="ArticleModify__submitDone">
 			<input type="hidden" name="id" value="${article.id}" />
 			<table>
 				<colgroup>
@@ -29,17 +47,17 @@
 						<td>${article.forPrintType2UpdateDate}</td>
 					</tr>
 					<tr>
+						<th>작성자</th>
+						<td>${article.extra__writerName}</td>
+					</tr>
+					<tr>
 						<th>조회</th>
 						<td><span class="text-blue-700">${article.hitCount}</span></td>
 					</tr>
 					<tr>
-						<th>수정날짜</th>
+						<th>추천</th>
 						<td><span class="text-blue-700">${article.goodReactionPoint}</span>
 						</td>
-					</tr>
-					<tr>
-						<th>작성자</th>
-						<td>${article.extra__writerName}</td>
 					</tr>
 					<tr>
 						<th>제목</th>
