@@ -153,11 +153,15 @@
 	</div>
 </section>
 
+
+<!-- 댓글 -->
 <section class="mt-5">
 	<div class="container mx-auto px-3">
 		<h1>댓글 작성</h1>
 		<c:if test="${rq.logined}">
-			<form class="table-box-type-1" method="POST" action="../reply/doWrite" onsubmit="ReplyWrite__submitForm(this); return false;">
+			<form class="table-box-type-1" method="POST"
+				action="../reply/doWrite"
+				onsubmit="ReplyWrite__submitForm(this); return false;">
 				<input type="hidden" name="relTypeCode" value="article" /> <input
 					type="hidden" name="relId" value="${article.id}" />
 				<table>
@@ -166,31 +170,38 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<tr>
+							<th>relId</th>
+							<td>${article.id}</td>
+						</tr>
+						<tr>
 							<th>작성자</th>
-              <td>${rq.loginedMember.nickname}</td>
-            </tr>
-            <tr>
-              <th>내용</th>
-              <td>
-               <textarea name="body" rows="5" placeholder="내용"></textarea>
-              </td>
-            </tr>
-            <tr>
-              <th>댓글작성</th>
-              <td>
-                <button type="submit" class="btn btn-primary">댓글작성</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+							<td>${rq.loginedMember.nickname}</td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td><textarea name="body" rows="5" placeholder="내용"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>댓글작성</th>
+							<td>
+								<button type="submit" class="btn btn-primary">댓글작성</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</c:if>
+		<c:if test="${rq.notLogined}">
+			<a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
     </c:if>
-    <c:if test="${rq.notLogined}">
-      <a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
-    </c:if>
-  </div>
+	</div>
 </section>
 
+<section class="mt-5">
+  <div class="container mx-auto px-3">
+    <h1>댓글 리스트(${repliesCount})</h1>
+  </div>
+</section>
 
 <%@ include file="../common/foot.jspf"%>
