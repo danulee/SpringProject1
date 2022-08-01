@@ -12,7 +12,8 @@ public class Reply {
 	private String regDate;
 	private String updateDate;
 	private int memberId;
-	private String title;
+	private String relTypeCode;
+	private int relId;
 	private String body;
 	private int hitCount;
 	private int goodReactionPoint;

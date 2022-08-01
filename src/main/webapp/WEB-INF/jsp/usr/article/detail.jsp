@@ -87,7 +87,8 @@
 					</tr>
 					<tr>
 						<th>조회</th>
-						<td><span class="badge badge-primary article-detail__hit-count">${article.hitCount}</span>
+						<td><span
+							class="badge badge-primary article-detail__hit-count">${article.hitCount}</span>
 						</td>
 					</tr>
 					<tr>
@@ -202,42 +203,50 @@
 
 <section class="mt-5">
 	<div class="container mx-auto px-3">
-		 <h1>댓글 리스트(${replies.size()})</h1>
+		<h1>댓글 리스트(${replies.size()})</h1>
 
-    <table class="table table-fixed w-full">
-      <colgroup>
-        <col width="50" />
-        <col width="100" />
-        <col width="100" />
-        <col width="50" />
-        <col width="100" />
-        <col />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>작성날짜</th>
-          <th>수정날짜</th>
-          <th>추천</th>
-          <th>작성자</th>
-          <th>내용</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach var="reply" items="${replies}">
-          <tr class="align-top">
-            <th>${reply.id}</th>
-            <td>${reply.forPrintType1RegDate}</td>
-            <td>${reply.forPrintType1UpdateDate}</td>
-            <td>${reply.goodReactionPoint}</td>
-            <td>${reply.extra__writerName}</td>
-            <td>
-              ${reply.forPrintBody}
-            </td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
+		<table class="table table-fixed w-full">
+			<colgroup>
+				<col width="50" />
+				<col width="100" />
+				<col width="100" />
+				<col width="50" />
+				<col width="100" />
+				<col width="150" />
+				<col />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>작성날짜</th>
+					<th>수정날짜</th>
+					<th>추천</th>
+					<th>작성자</th>
+					<th>비고</th>
+					<th>내용</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="reply" items="${replies}">
+					<tr class="align-top">
+						<th>${reply.id}</th>
+						<td>${reply.forPrintType1RegDate}</td>
+						<td>${reply.forPrintType1UpdateDate}</td>
+						<td>${reply.goodReactionPoint}</td>
+						<td>${reply.extra__writerName}</td>
+						<td><c:if test="${reply.extra__actorCanModify}">
+								<a class="btn btn-link" href="../reply/modify?id=${reply.id}">
+									수정</a>
+							</c:if> <c:if test="${reply.extra__actorCanDelete}">
+								<a class="btn btn-link"
+									onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;"
+									href="../reply/doDelete?id=${reply.id}">삭제</a>
+							</c:if></td>
+						<td>${reply.forPrintBody}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </section>
 

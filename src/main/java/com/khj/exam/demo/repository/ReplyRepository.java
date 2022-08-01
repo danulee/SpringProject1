@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Delete;
 import com.khj.exam.demo.vo.Reply;
 
 
@@ -37,5 +38,28 @@ public interface ReplyRepository {
 			ORDER BY R.id DESC
 			""")
 	public List<Reply> getForPrintReplies(int memberId, String relTypeCode, int relId);
+	
+	@Select("""
+			SELECT R.*,
+			M.nickname AS extra__writerName
+			FROM reply As R
+			LEFT JOIN `member` AS M
+			ON R.memberId = M.id
+			WHERE R.id = #{id}
+			""")
+	public Reply getForPrintReply(int memberId, int id);
+
+	@Select("""
+			SELECT R.*
+			FROM reply As R
+			WHERE R.id = #{id}
+			""")
+	public Reply getReply(int id);
+
+	@Delete("""
+			DELETE FROM reply
+			WHERE id = #{id}
+			""")
+	public void deleteReply(int id);
 
 }
