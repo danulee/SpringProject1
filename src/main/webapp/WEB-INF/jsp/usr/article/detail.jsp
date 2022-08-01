@@ -69,7 +69,7 @@
 				<tbody>
 					<tr>
 						<th>번호</th>
-						<td>${article.id}</td>
+						<td><span class="font-bold">${article.id}</span></td>
 					</tr>
 					<tr>
 						<th>작성날짜</th>
@@ -179,8 +179,8 @@
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea name="body" rows="5" placeholder="내용"></textarea>
-							</td>
+							<td><textarea class="w-full textarea textarea-bordered"
+									name="body" rows="5" placeholder="내용"></textarea></td>
 						</tr>
 						<tr>
 							<th>댓글작성</th>
@@ -199,9 +199,9 @@
 </section>
 
 <section class="mt-5">
-  <div class="container mx-auto px-3">
-    <h1>댓글 리스트(${repliesCount})</h1>
-  </div>
+	<div class="container mx-auto px-3">
+		<h1>댓글 리스트(${repliesCount})</h1>
+	</div>
 </section>
 
 <%@ include file="../common/foot.jspf"%>
