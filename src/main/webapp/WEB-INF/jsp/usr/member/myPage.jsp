@@ -29,11 +29,7 @@
             <td>${rq.loginedMember.email}</td>
           </tr>
           <tr>
-            <th>닉네임</th>
-            <td>${rq.loginedMember.nickname}</td>
-          </tr>
-          <tr>
-            <th>휴대폰</th>
+            <th>휴대전화번호</th>
             <td>${rq.loginedMember.cellphoneNo}</td>
           </tr>
           <tr>
