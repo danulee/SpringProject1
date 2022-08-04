@@ -24,7 +24,7 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
-
+	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
@@ -32,23 +32,21 @@ public class Rq {
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
-
+		
 		this.session = req.getSession();
-
+		
 		boolean isLogined = false;
 		int loginedMemberId = 0;
-
-		if (session.getAttribute("loginedMemberId") != null) {
+		
+		if ( session.getAttribute("loginedMemberId") != null ) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			loginedMember = memberService.getMemberById(loginedMemberId);
 		}
-
+		
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
-
-		this.req.setAttribute("rq", this);
 	}
 
 	public void printHistoryBackJs(String msg) {
@@ -68,7 +66,7 @@ public class Rq {
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
-
+	
 	public void println(String str) {
 		print(str + "\n");
 	}
@@ -94,27 +92,30 @@ public class Rq {
 	public String jsReplace(String msg, String uri) {
 		return Ut.jsReplace(msg, uri);
 	}
-
+	
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
-		String queryString = req.getQueryString();
+        String queryString = req.getQueryString();
 
-		if (queryString != null && queryString.length() > 0) {
-			currentUri += "?" + queryString;
-		}
+        if (queryString != null && queryString.length() > 0) {
+            currentUri += "?" + queryString;
+        }
 
-		return currentUri;
+        return currentUri;
 	}
 
 	public String getEncodedCurrentUri() {
 		return Ut.getUriEncoded(getCurrentUri());
 	}
 
-	// 이 메서드는 Rq 객체가 자연스럽게 생성되도록 유도하는 역할을 한다.
-	// 지우면 안되고,
-	// 편의를 위해 BeforeActionInterceptor 에서 꼭 호출을 해야한다.
-	public void initOnBeforeActionInterceptor() {
 
+	public void runA() {
+		System.out.println("A호출!!");
+		runB();
+	}
+	
+	public void runB() {
+		System.out.println("B호출!!");
 	}
 
 }
