@@ -79,16 +79,6 @@
 					</tr>
 				</tbody>
 			</table>
-
-			<div class="btns">
-				<a class="btn btn-link" href="../article/modify?id=${article.id}">게시물
-					수정</a>
-				<c:if test="${article.extra__actorCanDelete}">
-					<a class="btn btn-link"
-						onclick="if ( confirm('정말 삭제하시겠습니까?') == false) return false;"
-						href="../article/doDelete?id=${article.id}">게시물 삭제</a>
-				</c:if>
-			</div>
 		</form>
 	</div>
 </section>
