@@ -63,6 +63,7 @@
 			<form class="table-box-type-1" method="POST"
 				action="../member/doModify"
 				onsubmit="MemberModify__submit(this); return false;">
+				<input type="hidden" name="memberModifyAuthKey" value="${param.memberModifyAuthKey}"/>
 				<table>
 					<colgroup>
 						<col width="200" />
