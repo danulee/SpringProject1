@@ -2,6 +2,11 @@ package com.khj.exam.demo.utill;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Ut {
 	public static boolean empty(Object obj) {
