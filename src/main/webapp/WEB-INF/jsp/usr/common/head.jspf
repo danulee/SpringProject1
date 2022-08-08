@@ -63,7 +63,7 @@
 						class="h-full flex items-center px-3 hover:underline"> <span>${rq.loginedMember.nickname}'s
 								Profile</span>
 					</a></li>
-					<li><a href="/usr/member/doLogout"
+					<li><a href="${rq.logoutUri}"
 						class="h-full flex items-center px-3 hover:underline"> <span>로그아웃</span>
 					</a></li>
 				</c:if>

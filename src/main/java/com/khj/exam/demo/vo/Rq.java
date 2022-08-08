@@ -112,15 +112,6 @@ public class Rq {
 		return Ut.getUriEncoded(getCurrentUri());
 	}
 
-	public void runA() {
-		System.out.println("A호출!!");
-		runB();
-	}
-
-	public void runB() {
-		System.out.println("B호출!!");
-	}
-
 	public void printReplaceJs(String msg, String uri) {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, uri));
@@ -129,17 +120,36 @@ public class Rq {
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
-
+	
+	public String getLogoutUri() {	
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+	
 	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
-
+		
+		// 로그인 후 돌아가면 안되는 페이지 URL들
 		switch (requestUri) {
 		case "/usr/member/login":
 		case "/usr/member/join":
 		case "/usr/member/findLoginId":
 		case "/usr/member/findLoginPw":
-			return Ut.getUriEncoded(paramMap.get("afterLoginUri"));
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
+		return getEncodedCurrentUri();
+	}
+	
+	public String getAfterLogoutUri() {
+		String requestUri = req.getRequestURI();
+
+		// 필요하다면 활성화
+		/*
+		switch (requestUri) {
+		case "/usr/article/write":
+			return "";
+		}
+		*/
+
 		return getEncodedCurrentUri();
 	}
 
