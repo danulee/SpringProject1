@@ -58,6 +58,9 @@
 						class="h-full flex items-center px-3 hover:underline"> <span>로그인</span>
 					</a></li>
 				</c:if>
+				<li><a href="${rq.joinUri}"
+					class="h-full flex items-center px-3 hover:underline"> <span>회원가입</span>
+				</a></li>
 				<c:if test="${rq.logined}">
 					<li><a href="/usr/member/myPage"
 						class="h-full flex items-center px-3 hover:underline"> <span>${rq.loginedMember.nickname}'s

@@ -83,6 +83,17 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 	}
 
+	public String historyBackJsOnView(String resultCode, String msg) {
+		req.setAttribute("msg", String.format("[%s] %s", resultCode, msg));
+		req.setAttribute("historyBack", true);
+		return "common/js";
+	}
+
+	public String jsHistoryBack(String resultCode, String msg) {
+		msg = String.format("[%s] %s", resultCode, msg);
+		return Ut.jsHistoryBack(msg);
+	}
+
 	public String historyBackJsOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
@@ -116,18 +127,22 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, uri));
 	}
+	
+	public String getJoinUri() {	
+		return "../member/join?afterLogoutUri=" + getAfterLogoutUri();
+	}
 
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
-	
-	public String getLogoutUri() {	
+
+	public String getLogoutUri() {
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
-	
+
 	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
-		
+
 		// 로그인 후 돌아가면 안되는 페이지 URL들
 		switch (requestUri) {
 		case "/usr/member/login":
@@ -138,21 +153,18 @@ public class Rq {
 		}
 		return getEncodedCurrentUri();
 	}
-	
+
 	public String getAfterLogoutUri() {
 		String requestUri = req.getRequestURI();
 
 		// 필요하다면 활성화
 		/*
-		switch (requestUri) {
-		case "/usr/article/write":
-			return "";
-		}
-		*/
+		 * switch (requestUri) { case "/usr/article/write": return ""; }
+		 */
 
 		return getEncodedCurrentUri();
 	}
-	
+
 	public String getArticleDetailUriFromArticleList(Article article) {
 		return "../article/detail?id=" + article.getId() + "&listUri=" + getEncodedCurrentUri();
 	}
