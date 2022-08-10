@@ -33,6 +33,7 @@
 			action="../article/doModify"
 			onsubmit="ArticleModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id}" />
+			<input type="hidden" name="replaceUri" value="${param.replaceUri}" />
 			<table>
 				<colgroup>
 					<col width="200" />
@@ -82,8 +83,7 @@
 					<tr>
 						<th>수정</th>
 						<td><input type="submit" class="btn btn-primary" value="수정" />
-							<button type="button" class="btn btn-outline btn-success"
-								onclick="history.back();">뒤로가기</button></td>
+							<a class="btn btn-outline btn-success" href="${param.replaceUri}">뒤로가기</a></td>
 					</tr>
 				</tbody>
 			</table>

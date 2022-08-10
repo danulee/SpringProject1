@@ -176,6 +176,7 @@
 			<form class="table-box-type-1" method="POST"
 				action="../reply/doWrite"
 				onsubmit="ReplyWrite__submitForm(this); return false;">
+				<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 				<input type="hidden" name="relTypeCode" value="article" /> <input
 					type="hidden" name="relId" value="${article.id}" />
 				<table>
@@ -246,12 +247,13 @@
 						<td>${reply.goodReactionPoint}</td>
 						<td>${reply.extra__writerName}</td>
 						<td><c:if test="${reply.extra__actorCanModify}">
-								<a class="btn btn-link" href="../reply/modify?id=${reply.id}">
+								<a class="btn btn-link"
+									href="../reply/modify?id=${reply.id}&replaceUri=${rq.encodedCurrentUri}">
 									수정</a>
 							</c:if> <c:if test="${reply.extra__actorCanDelete}">
 								<a class="btn btn-link"
 									onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;"
-									href="../reply/doDelete?id=${reply.id}">삭제</a>
+									href="../reply/doDelete?id=${reply.id}&replaceUri=${rq.encodedCurrentUri}">삭제</a>
 							</c:if></td>
 						<td>${reply.forPrintBody}</td>
 					</tr>
