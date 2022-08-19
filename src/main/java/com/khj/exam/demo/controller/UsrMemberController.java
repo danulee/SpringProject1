@@ -59,6 +59,22 @@ public class UsrMemberController {
 
 		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", afterJoinUri);
 	}
+	
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData getLoginIdDup(String loginId) {
+		if ( Ut.empty(loginId) ) {
+			return ResultData.from("F-1","loginId(을)를 입력해주세요.");
+		}
+
+		Member oldMember = memberService.getMemberByLoginId(loginId);
+
+		if (oldMember != null) {
+			return ResultData.from("F-A", "해당 아이디는 이미 사용중입니다.", "loginId", loginId);
+		}
+
+		return ResultData.from("S-A", "사용가능한 로그인아이디 입니다.", "loginId", loginId);
+	}
 
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {

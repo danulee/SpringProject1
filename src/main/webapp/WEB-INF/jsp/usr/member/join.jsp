@@ -8,6 +8,7 @@
 
 <script>
 	let submitJoinFormDone = false;
+	let validLogind = "";
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
 			alert('처리중입니다.');
@@ -15,55 +16,99 @@
 		}
 
 		form.loginId.value = form.loginId.value.trim();
+
 		if (form.loginId.value.length == 0) {
 			alert('로그인아이디를 입력해주세요.');
 			form.loginId.focus();
 			return;
 		}
 
+		if (form.loginId.value != validLogind) {
+			alert('해당 로그인아이디는 올바르지 않습니다. 다른 로그인아이디를 입력해주세요.');
+			form.loginId.focus();
+			return;
+		}
+
 		form.loginPw.value = form.loginPw.value.trim();
+
 		if (form.loginPw.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.loginPw.focus();
 			return;
 		}
+
 		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
 		if (form.loginPwConfirm.value.length == 0) {
 			alert('비밀번호확인을 입력해주세요.');
 			form.loginPwConfirm.focus();
 			return;
 		}
+
 		if (form.loginPw.value != form.loginPwConfirm.value) {
 			alert('비밀번호확인이 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
 			return;
 		}
+
 		form.name.value = form.name.value.trim();
+
 		if (form.name.value.length == 0) {
 			alert('이름을 입력해주세요.');
 			form.name.focus();
 			return;
 		}
+
 		form.nickname.value = form.nickname.value.trim();
+
 		if (form.nickname.value.length == 0) {
 			alert('닉네임을 입력해주세요.');
 			form.nickname.focus();
 			return;
 		}
+
 		form.email.value = form.email.value.trim();
+
 		if (form.email.value.length == 0) {
 			alert('이메일을 입력해주세요.');
 			form.email.focus();
 			return;
 		}
+
 		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+
 		if (form.cellphoneNo.value.length == 0) {
 			alert('휴대전화번호를 입력해주세요.');
 			form.cellphoneNo.focus();
 			return;
 		}
+
 		submitJoinFormDone = true;
 		form.submit();
+	}
+
+	function checkLoginIdDup(el) {
+		$('.loginId-message').empty();
+		const form = $(el).closest('form').get(0);
+
+		if (form.loginId.value == 0) {
+			validLogind = '';
+			return;
+		}
+
+		$.get('../member/getLoginIdDup', {
+			isAjax : 'Y',
+			loginId : form.loginId.value,
+		}, function(data) {
+			$('.loginId-message').html(
+					'<div class="mt-2">' + data.msg + '</div>');
+			if (data.success) {
+				validLogind = data.data1;
+			} else {
+				validLogind = '';
+			}
+		}, 'json');
+
 	}
 </script>
 
@@ -83,7 +128,9 @@
 						<tr>
 							<th>로그인아이디</th>
 							<td><input class="input input-bordered" name="loginId"
-								placeholder="로그인아이디" type="text" /></td>
+								placeholder="로그인아이디" type="text"
+								onkeyup="checkLoginIdDup(this);" autocomplete="off" />
+								<div class="loginId-message"></div></td>
 						</tr>
 						<tr>
 							<th>로그인비밀번호</th>
