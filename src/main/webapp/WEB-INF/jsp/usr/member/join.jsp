@@ -6,6 +6,8 @@
 <c:set var="pageTitle" value="회원가입" />
 <%@ include file="../common/head.jspf"%>
 
+
+
 <script>
 	let submitJoinFormDone = false;
 	let validLogind = "";
@@ -87,21 +89,30 @@
 		form.submit();
 	}
 
-	function checkLoginIdDup(el) {
-		$('.loginId-message').empty();
-		const form = $(el).closest('form').get(0);
-
-		if (form.loginId.value == 0) {
-			validLogind = '';
-			return;
-		}
+	var checkLoginIdDup = _.debounce(function(form) {
+		<!--
+		$massage.empty().append('<div class="mt-2"> 아이디를 입력해주세요. </div>');
+		-->
 
 		$.get('../member/getLoginIdDup', {
 			isAjax : 'Y',
 			loginId : form.loginId.value,
 		}, function(data) {
-			$('.loginId-message').html(
-					'<div class="mt-2">' + data.msg + '</div>');
+			var $massage = $(form.loginId).next();
+
+			if (data.resultCode.substr(0, 2) == 'S-') {
+				$massage.empty().append(
+						'<div class="mt-2 text-green-500">' + data.msg
+								+ '</div>');
+				validLogind = data.body.loginId;
+			} else {
+				$massage.empty()
+						.append(
+								'<div class="mt-2 text-red-500">' + data.msg
+										+ '</div>');
+				validLogind = '';
+			}
+
 			if (data.success) {
 				validLogind = data.data1;
 			} else {
@@ -109,6 +120,20 @@
 			}
 		}, 'json');
 
+	}, 1000);
+
+	function JoinForm_checkLoginIdDup(input) {
+		var form = input.form;
+		form.loginId.value = form.loginId.value.trim();
+
+		var $massage = $(form.loginId).next();
+
+		if (form.loginId.value.length == 0) {
+			$massage.empty();
+			return;
+		}
+
+		checkLoginIdDup(form);
 	}
 </script>
 
@@ -129,8 +154,8 @@
 							<th>로그인아이디</th>
 							<td><input class="input input-bordered" name="loginId"
 								placeholder="로그인아이디" type="text"
-								onkeyup="checkLoginIdDup(this);" autocomplete="off" />
-								<div class="loginId-message"></div></td>
+								onkeyup="JoinForm_checkLoginIdDup(this);" autocomplete="off" />
+								<div class="massage-msg"></div></td>
 						</tr>
 						<tr>
 							<th>로그인비밀번호</th>
